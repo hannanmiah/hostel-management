@@ -20,7 +20,7 @@ state('hostels', $hostels);
                     <p class="text-gray-700 text-base">{{ $hostel->location }}</p>
                 </div>
                 <div class="px-6 pt-4 pb-2">
-                    <a href="/book/{{ $hostel->id }}"
+                    <a href="{{route('hostels.view', $hostel->id)}}"
                        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Book Now
                     </a>

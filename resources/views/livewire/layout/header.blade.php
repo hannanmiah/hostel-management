@@ -33,9 +33,9 @@ new class extends Component {
                         <button class="btn" wire:click="logout">Logout</button>
                     @else
                         <a href="{{route('login')}}" wire:navigate
-                           class="text-gray-800 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                           class="btn btn-link">Login</a>
                         <a href="{{route('register')}}" wire:navigate
-                           class="text-gray-800 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Register</a>
+                           class="btn btn-link">Register</a>
                     @endauth
                 </div>
             </div>
