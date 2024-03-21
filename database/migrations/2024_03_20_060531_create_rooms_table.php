@@ -16,7 +16,9 @@ return new class extends Migration
             $table->foreignId('hostel_id')->constrained();
             $table->string('number')->unique();
             $table->string('type');
+            $table->decimal('price', 8, 2);
             $table->text('description')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('availability')->default(true);
             $table->timestamps();
         });

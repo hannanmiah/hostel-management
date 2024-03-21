@@ -19,7 +19,7 @@ class HostelFactory extends Factory
         return [
             'name' => $this->faker->company,
             'location' => $this->faker->address,
-            'image' => $this->faker->image,
+            'image' => 'https://via.placeholder.com/150',
         ];
     }
 }

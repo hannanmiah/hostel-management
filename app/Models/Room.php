@@ -11,6 +11,8 @@ class Room extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function hostel(): BelongsTo
     {
         return $this->belongsTo(Hostel::class);

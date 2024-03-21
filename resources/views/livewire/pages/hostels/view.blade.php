@@ -11,7 +11,7 @@ new #[\Livewire\Attributes\Layout('layouts.general')] class extends Component {
     }
 }; ?>
 
-<div>
+<div class="container mx-auto">
     <div class="bg-white rounded overflow-hidden shadow-lg">
         <img class="w-full h-64 object-cover" src="{{ $hostel->image }}" alt="{{ $hostel->name }}">
         <div class="px-6 py-4">
@@ -31,13 +31,12 @@ new #[\Livewire\Attributes\Layout('layouts.general')] class extends Component {
                             <h2 class="card-title">#Room-{{$room->number}}</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, quas.</p>
                             <div class="card-actions justify-end">
-                                <button class="btn btn-primary">Book Now</button>
+                                <a href="{{route('book',$room->id)}}" class="btn btn-primary" wire:navigate>Book Now</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-
     </div>
 </div>

@@ -22,6 +22,9 @@ class RoomFactory extends Factory
             'number' => $this->faker->unique()->randomNumber(6),
             'type' => $this->faker->randomElement(['single', 'double']),
             'availability' => $this->faker->boolean,
+            'description' => $this->faker->sentence,
+            'price' => $this->faker->randomFloat(2, 100, 1000),
+            'image' => 'https://via.placeholder.com/150',
         ];
     }
 }

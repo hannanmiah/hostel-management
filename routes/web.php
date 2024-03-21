@@ -18,4 +18,9 @@ Route::prefix('hostels')->group(function () {
     Volt::route('/{hostel}', 'pages.hostels.view')->name('hostels.view');
 });
 
+Route::prefix('book')->middleware('auth')->group(function () {
+    Volt::route('/{room}', 'pages.book')->name('book');
+    Volt::route('/{room}/confirmation', 'pages.book-confirmation')->name('book-confirmation');
+});
+
 require __DIR__.'/auth.php';
