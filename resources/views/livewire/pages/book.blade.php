@@ -4,7 +4,7 @@ use function Livewire\Volt\{form, state, layout};
 
 layout('layouts.general');
 form(\App\Livewire\Forms\BookForm::class);
-state(['room' => fn(\App\Models\Room $room) => $room]);
+state(['room' => fn(\App\Models\Room $room) => $room, 'config' => ['altFormat' => 'd/m/Y']]);
 $store = function () {
     $this->validate();
     $number_of_occupants = (int)$this->form->adults + $this->form->children;
@@ -25,66 +25,44 @@ $store = function () {
 <div class="container mx-auto flex flex-col space-y-4">
     <h1 class="text-2xl font-bold px-4">Booking: #Room-{{$room->number}}</h1>
     <div class="flex space-x-4">
-        <form class="w-full p-4" wire:submit="store">
+        <x-mary-form class="w-full p-4" wire:submit="store">
             <div class="flex flex-col space-y-4">
-                <div class="flex flex-col space-y-2">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" wire:model.blur="form.name"
-                           class="border border-gray-300 rounded p-2">
-                    @error('form.name') <span class="text-error">{{ $message }}</span> @enderror
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" wire:model.blur="form.email"
-                           class="border border-gray-300 rounded p-2">
-                    @error('form.email') <span class="text-error">{{ $message }}</span> @enderror
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="phone">Phone</label>
-                    <input type="text" id="phone" name="phone" wire:model="form.phone"
-                           class="border border-gray-300 rounded p-2">
-
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="address">Address</label>
-                    <input type="text" id="address" name="address" wire:model="form.address"
-                           class="border border-gray-300 rounded p-2">
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="checkin">Checkin</label>
-                    <input type="date" id="checkin" name="checkin" wire:model="form.checkin"
-                           class="border border-gray-300 rounded p-2">
-                    @error('form.checkin') <span class="text-error">{{ $message }}</span> @enderror
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="checkout">Checkout</label>
-                    <input type="date" id="checkout" name="checkout" wire:model="form.checkout"
-                           class="border border-gray-300 rounded p-2">
-
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="adults">Adults</label>
-                    <input type="number" id="adults" name="adults" wire:model="form.adults"
-                           class="border border-gray-300 rounded p-2">
-
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="children">Children</label>
-                    <input type="number" id="children" name="children" wire:model="form.children"
-                           class="border border-gray-300 rounded p-2">
-
-                </div>
-                <div class="flex flex-col space-y-2">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" wire:model="form.message"
-                              class="border border-gray-300 rounded p-2"></textarea>
-                </div>
+                <x-mary-input wire:model.blur="form.name" label="Full Name" placeholder="Your name" icon="o-user"
+                              hint="Your full name"/>
+                <x-mary-input wire:model.blur="form.email" label="Email" type="email" placeholder="Your Email"
+                              icon="o-user"
+                              hint="Your Email hannan@gmail.com"/>
+                <x-mary-input wire:model.blur="form.phone" label="Phone" placeholder="Your Phone" icon="o-user"
+                              hint="01787378887"/>
+                <x-mary-input wire:model.blur="form.address" label="Full Address" placeholder="Your Address"
+                              icon="o-user"
+                              hint="Your full address"/>
+                <x-mary-datepicker type="date" label="Check In" wire:model="form.checkin" icon="o-calendar"
+                                   hint="22/07/24"
+                                   :config="$config"/>
+                <x-mary-datepicker type="date" label="Check Out" wire:model="form.checkout" icon="o-calendar"
+                                   hint="23/07/24"
+                                   :config="$config"/>
+                <x-mary-input wire:model.blur="form.adults" type="number" label="Adults" placeholder="Number of adults"
+                              icon="o-user"
+                              hint="2"/>
+                <x-mary-input wire:model.blur="form.children" type="number" label="Children"
+                              placeholder="Number of children"
+                              icon="o-user"
+                              hint="2"/>
+                <x-mary-textarea
+                    label="Message"
+                    wire:model="form.message"
+                    placeholder="Your message to us ..."
+                    hint="Max 1000 chars"
+                    rows="5"
+                    inline/>
                 <div class="flex flex-col space-y-2">
                     <button type="submit" class="btn btn-primary">Book Now
                     </button>
                 </div>
             </div>
-        </form>
+        </x-mary-form>
         <div class="self-center">
             <div class="card bg-base-100 shadow-xl">
                 <figure><img
