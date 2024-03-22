@@ -12,6 +12,11 @@ class Booking extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'check_in' => 'datetime:d-m-Y',
+        'check_out' => 'datetime:d-m-Y',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

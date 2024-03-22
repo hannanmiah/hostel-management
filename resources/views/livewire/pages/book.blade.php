@@ -1,10 +1,21 @@
 <?php
 
-use function Livewire\Volt\{form, state, layout};
+use function Livewire\Volt\{form, state, layout, mount, computed};
 
 layout('layouts.general');
 form(\App\Livewire\Forms\BookForm::class);
-state(['room' => fn(\App\Models\Room $room) => $room, 'config' => ['altFormat' => 'd/m/Y']]);
+state(['room' => fn(\App\Models\Room $room) => $room, 'booked_dates' => []]);
+mount(function () {
+    $this->room->load('hostel');
+    $this->booked_dates = \App\Models\Booking::where('room_id', $this->room->id)->get()->map(function ($booking) {
+        return [$booking->check_in->format('d-m-Y'), $booking->check_out->format('d-m-Y')];
+    })->flatten()->toArray();
+});
+
+$config = computed(function () {
+    return ['altFormat' => 'd M Y', 'dateFormat' => 'd-m-Y', 'minDate' => 'today', 'enableTime' => false, 'disable' => $this->booked_dates, 'locale' => 'en'];
+});
+dump($config);
 $store = function () {
     $this->validate();
     $number_of_occupants = (int)$this->form->adults + $this->form->children;
@@ -37,12 +48,12 @@ $store = function () {
                 <x-mary-input wire:model.blur="form.address" label="Full Address" placeholder="Your Address"
                               icon="o-user"
                               hint="Your full address"/>
-                <x-mary-datepicker type="date" label="Check In" wire:model="form.checkin" icon="o-calendar"
+                <x-mary-datepicker type="date" label="Check In" wire:model.blur="form.checkin" icon="o-calendar"
                                    hint="22/07/24"
-                                   :config="$config"/>
-                <x-mary-datepicker type="date" label="Check Out" wire:model="form.checkout" icon="o-calendar"
+                                   :config="$this->config"/>
+                <x-mary-datepicker type="date" label="Check Out" wire:model.blur="form.checkout" icon="o-calendar"
                                    hint="23/07/24"
-                                   :config="$config"/>
+                                   :config="$this->config"/>
                 <x-mary-input wire:model.blur="form.adults" type="number" label="Adults" placeholder="Number of adults"
                               icon="o-user"
                               hint="2"/>

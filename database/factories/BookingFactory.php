@@ -18,8 +18,8 @@ class BookingFactory extends Factory
      */
     public function definition(): array
     {
-        $check_in = $this->faker->dateTimeBetween('-1 month', '+1 month');
-        $check_out = (clone $check_in)->modify('+'.rand(1, 14).' days');
+        $check_in = $this->faker->dateTimeBetween('+1 week', '+2 week');
+        $check_out = (clone $check_in)->modify('+'.rand(1, 4).' days');
 
         return [
             'user_id' => User::factory(),

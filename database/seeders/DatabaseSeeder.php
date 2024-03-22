@@ -16,11 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //        $this->call([
-        //            HostelSeeder::class,
-        //            RoomSeeder::class,
-        //            BookingSeeder::class,
-        //        ]);
+        User::factory()->create([
+            'is_admin' => true,
+            'email' => 'admin@admin.com',
+            'name' => 'Admin',
+            'password' => bcrypt('12345678'),
+        ]);
 
         Hostel::factory()->count(50)->create()->each(function ($hostel) {
             // Each hostel has 100 rooms
