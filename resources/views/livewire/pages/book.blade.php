@@ -15,7 +15,7 @@ mount(function () {
 $config = computed(function () {
     return ['altFormat' => 'd M Y', 'dateFormat' => 'd-m-Y', 'minDate' => 'today', 'enableTime' => false, 'disable' => $this->booked_dates, 'locale' => 'en'];
 });
-dump($config);
+
 $store = function () {
     $this->validate();
     $number_of_occupants = (int)$this->form->adults + $this->form->children;
@@ -27,6 +27,8 @@ $store = function () {
         'check_out' => $this->form->checkout,
         'number_of_occupants' => $number_of_occupants,
     ]);
+
+    auth()->user()->notify(new \App\Notifications\BookingSuccessNotification());
 
     $this->redirect(route('book-confirmation', ['room' => $this->room->id, 'booking_id' => $booking->id]), navigate: true);
 };
