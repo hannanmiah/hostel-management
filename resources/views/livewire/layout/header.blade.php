@@ -11,7 +11,7 @@ new class extends Component {
     {
         $logout();
 
-        $this->redirect(route('home'), navigate: true);
+        $this->redirect(route('home'));
     }
 }; ?>
 
@@ -35,12 +35,12 @@ new class extends Component {
             <div class="ml-10 flex items-baseline space-x-4">
                 <a href="{{route('home')}}" wire:navigate
                    class="btn btn-link">Home</a>
-                <a href="/find"
+                <a href="{{route('hostels.index')}}" wire:navigate
                    class="btn btn-link">Find</a>
                 @auth
                     <a href="{{route('dashboard')}}" wire:navigate
                        class="btn btn-link">Dashboard</a>
-                    <button class="btn" wire:click="logout">Logout</button>
+                    <button class="btn btn-accent btn-sm" wire:click="logout">Logout</button>
                 @else
                     <a href="{{route('login')}}" wire:navigate
                        class="btn btn-link">Login</a>

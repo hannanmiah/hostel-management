@@ -1,11 +1,11 @@
 <?php
 
-use function Livewire\Volt\{state, layout, title};
+use function Livewire\Volt\{state, layout, title, with, usesPagination};
 
 layout('layouts.general');
 title('Home | Hotel Management');
-$hostels = \App\Models\Hostel::all();
-state('hostels', $hostels);
+usesPagination();
+with(['hostels' => \App\Models\Hostel::paginate(8)]);
 
 ?>
 
@@ -27,5 +27,8 @@ state('hostels', $hostels);
                 </div>
             </div>
         @endforeach
+    </div>
+    <div class="p-4">
+        {{ $hostels->links() }}
     </div>
 </div>
